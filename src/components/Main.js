@@ -34,13 +34,11 @@ function Main(props) {
       setSelectedDigimons([]);
       setRound(1);
       props.newBestScore();
-      console.log("restart");
     } else {
       const tempSelectedDigimons = [...selectedDigimons, digimon];
       // console.log(tempSelectedDigimons, digimons);
       if (tempSelectedDigimons.length >= digimons.length) {
         // round is clear
-        console.log("clear round");
         pickRandomDigimons(
           initialCards + round * addedCardsPerRound,
           allDigimons
@@ -50,7 +48,6 @@ function Main(props) {
         props.addCurrentScore();
       } else {
         // selection was correct
-        console.log("correct move");
         setSelectedDigimons(tempSelectedDigimons);
         shuffleDigimons();
         props.addCurrentScore();
@@ -68,7 +65,7 @@ function Main(props) {
         });
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
       });
   }, []);
 

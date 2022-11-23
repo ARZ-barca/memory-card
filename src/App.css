@@ -82,10 +82,11 @@ main .round-scores {
   border: 1px solid black;
   cursor: pointer;
   transition: transform 150ms ease-in-out;
+  box-shadow: 0 0 5px 3px rgb(61, 117, 131);
 }
 
 .card:hover {
-  transform: scale(1.1);
+  transform: scale(1.07);
 }
 
 .card img {
@@ -97,4 +98,22 @@ main .round-scores {
   text-align: center;
   border-top: 1px dashed black;
   padding: 10px;
+}
+
+@media (min-width: 1750px) {
+  :root {
+    font-size: 18px;
+  }
+  .card {
+    width: 170px;
+  }
+}
+
+@media (min-width: 2000px) {
+  :root {
+    font-size: 22px;
+  }
+  .card {
+    width: 200px;
+  }
 }
