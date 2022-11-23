@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Main from "./components/Main";
 
 function App() {
@@ -10,13 +10,28 @@ function App() {
   }
 
   function newBestScore() {
-    setBestScore(currentScore);
+    if (currentScore > bestScore) {
+      setBestScore(currentScore);
+    }
+    setCurrentScore(0);
   }
 
   return (
     <div>
-      {/* <Head /> */}
-      <Main></Main>
+      <header>
+        <div className="heading">
+          <h1>Digimon Memory Game</h1>
+        </div>
+
+        <div className="scores">
+          <span className="current-score">Current Score : {currentScore}</span>{" "}
+          | <span className="best-score">Best Score: {bestScore}</span>
+        </div>
+      </header>
+      <Main
+        addCurrentScore={addCurrentScore}
+        newBestScore={newBestScore}
+      ></Main>
     </div>
   );
 }

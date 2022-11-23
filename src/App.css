@@ -1,0 +1,100 @@
+:root {
+  font-size: 14px;
+}
+
+/********************************
+header
+*********************************/
+
+header {
+  background-color: #38bdf8;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: #bae6fd;
+  /* font-weight: 300; */
+}
+
+.scores {
+  font-size: 1.5rem;
+  /* font-weight: 300; */
+}
+
+.best-score {
+  color: #0c4a6e;
+}
+
+.current-score {
+  color: #ea580c;
+}
+
+/********************************
+main
+*********************************/
+
+body {
+  background-color: #0284c7;
+}
+
+main {
+  padding: 0 20px 20px 20px;
+}
+
+main .info {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #0f172a;
+  justify-content: center;
+}
+
+main .round {
+  color: #fde047;
+  font-style: italic;
+}
+
+main .round-scores {
+  color: #10b981;
+}
+
+.cards-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  background-color: white;
+  border-radius: 5px;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  cursor: pointer;
+  transition: transform 150ms ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.card img {
+  border-radius: 5px;
+  width: 100%;
+}
+
+.digimon-name {
+  text-align: center;
+  border-top: 1px dashed black;
+  padding: 10px;
+}

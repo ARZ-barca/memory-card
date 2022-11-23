@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import "./assets/styles/Cards.css";
+import React from "react";
 
 function Cards(props) {
   return (
@@ -8,6 +7,7 @@ function Cards(props) {
         return (
           <div className="card" onClick={() => props.selectDigimon(digimon)}>
             <img src={digimon.img} alt={digimon.name}></img>
+            <div className="digimon-name">{digimon.name}</div>
           </div>
         );
       })}

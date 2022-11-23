@@ -9,12 +9,6 @@ function Main(props) {
   const initialCards = 5;
   const addedCardsPerRound = 3;
 
-  // function restart() {
-  //   setRound(1);
-  //   pickRandomDigimons(initialCards, allDigimons);
-  //   setSelectedDigimons([]);
-  // }
-
   // pick given number of random digimons from all digimons
   function pickRandomDigimons(n, all) {
     const shuffled = [...all].sort(() => {
@@ -23,6 +17,7 @@ function Main(props) {
     setDigimons(shuffled.slice(0, n));
   }
 
+  // shuffles corrent digimons
   function shuffleDigimons() {
     setDigimons(
       [...digimons].sort(() => {
@@ -35,41 +30,56 @@ function Main(props) {
   function selectDigimon(digimon) {
     if (selectedDigimons.includes(digimon)) {
       // digimon was selected before and game is lost
-
-      // TODO
-
+      pickRandomDigimons(initialCards, allDigimons);
+      setSelectedDigimons([]);
+      setRound(1);
+      props.newBestScore();
       console.log("restart");
     } else {
       const tempSelectedDigimons = [...selectedDigimons, digimon];
-      console.log(tempSelectedDigimons, digimons);
+      // console.log(tempSelectedDigimons, digimons);
       if (tempSelectedDigimons.length >= digimons.length) {
         // round is clear
+        console.log("clear round");
         pickRandomDigimons(
           initialCards + round * addedCardsPerRound,
           allDigimons
         );
         setSelectedDigimons([]);
         setRound(round + 1);
+        props.addCurrentScore();
       } else {
         // selection was correct
+        console.log("correct move");
         setSelectedDigimons(tempSelectedDigimons);
         shuffleDigimons();
+        props.addCurrentScore();
       }
     }
   }
 
   // start effect
   useEffect(() => {
-    fetch("https://digimon-api.vercel.app/api/digimon").then((response) => {
-      response.json().then((value) => {
-        setAllDigimons(value);
-        pickRandomDigimons(initialCards, value);
+    fetch("https://digimon-api.vercel.app/api/digimon")
+      .then((response) => {
+        response.json().then((value) => {
+          setAllDigimons(value);
+          pickRandomDigimons(initialCards, value);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
       });
-    });
   }, []);
 
   return (
     <main>
+      <div className="info">
+        <div className="round">Round: {round}</div> -{" "}
+        <div className="round-scores">
+          {selectedDigimons.length} / {digimons.length}
+        </div>
+      </div>
       <Cards digimons={digimons} selectDigimon={selectDigimon} />
     </main>
   );
