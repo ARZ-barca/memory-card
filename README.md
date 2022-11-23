@@ -1,3 +1,3 @@
 # a degimon memory card game
 
-live demo: http://arz-barca.github.io/memory-card
+live demo: https://arz-barca.github.io/memory-card
