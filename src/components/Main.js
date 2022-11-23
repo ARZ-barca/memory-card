@@ -57,7 +57,7 @@ function Main(props) {
 
   // start effect
   useEffect(() => {
-    fetch("https://digimon-api.vercel.app/api/digimon")
+    fetch("https://digimon-api.vercel.app/api/digimon", { mode: "cors" })
       .then((response) => {
         response.json().then((value) => {
           setAllDigimons(value);
