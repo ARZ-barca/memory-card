@@ -6,6 +6,7 @@ function Main(props) {
   const [digimons, setDigimons] = useState([]);
   const [allDigimons, setAllDigimons] = useState([]);
   const [selectedDigimons, setSelectedDigimons] = useState([]);
+  const [roundOver, setRoundOver] = useState(false);
   const initialCards = 5;
   const addedCardsPerRound = 3;
 
@@ -26,6 +27,23 @@ function Main(props) {
     );
   }
 
+  // TODO
+  // called after player has finished the round and clicks next round
+  function nextRound() {
+    pickRandomDigimons(initialCards + round * addedCardsPerRound, allDigimons);
+    setSelectedDigimons([]);
+    setRound(round + 1);
+  }
+
+  // TODO
+  // called after player has lost and clicks play again
+  function restart() {
+    pickRandomDigimons(initialCards, allDigimons);
+    setSelectedDigimons([]);
+    setRound(1);
+    props.checkBestScore();
+  }
+
   // when user clicks on a degimon
   function selectDigimon(digimon) {
     if (selectedDigimons.includes(digimon)) {
@@ -33,7 +51,7 @@ function Main(props) {
       pickRandomDigimons(initialCards, allDigimons);
       setSelectedDigimons([]);
       setRound(1);
-      props.newBestScore();
+      props.checkBestScore();
     } else {
       const tempSelectedDigimons = [...selectedDigimons, digimon];
       // console.log(tempSelectedDigimons, digimons);
@@ -77,7 +95,11 @@ function Main(props) {
           {selectedDigimons.length} / {digimons.length}
         </div>
       </div>
-      <Cards digimons={digimons} selectDigimon={selectDigimon} />
+      <Cards
+        digimons={digimons}
+        selectDigimon={selectDigimon}
+        roundOver={roundOver}
+      />
     </main>
   );
 }

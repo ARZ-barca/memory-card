@@ -9,7 +9,7 @@ function App() {
     setCurrentScore(currentScore + 1);
   }
 
-  function newBestScore() {
+  function checkBestScore() {
     if (currentScore > bestScore) {
       setBestScore(currentScore);
     }
@@ -30,7 +30,7 @@ function App() {
       </header>
       <Main
         addCurrentScore={addCurrentScore}
-        newBestScore={newBestScore}
+        checkBestScore={checkBestScore}
       ></Main>
     </div>
   );
