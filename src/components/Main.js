@@ -6,13 +6,14 @@ function Main(props) {
   const [digimons, setDigimons] = useState([]);
   const [allDigimons, setAllDigimons] = useState([]);
   const [selectedDigimons, setSelectedDigimons] = useState([]);
-  const [roundOver, setRoundOver] = useState(false);
+  const [roundOver, setRoundOver] = useState(undefined);
+  const [lost, setLost] = useState(false);
   const initialCards = 5;
   const addedCardsPerRound = 3;
 
   // pick given number of random digimons from all digimons
-  function pickRandomDigimons(n, all) {
-    const shuffled = [...all].sort(() => {
+  function pickRandomDigimons(n, allDigimons) {
+    const shuffled = [...allDigimons].sort(() => {
       return 0.5 - Math.random();
     });
     setDigimons(shuffled.slice(0, n));
@@ -27,48 +28,42 @@ function Main(props) {
     );
   }
 
-  // TODO
   // called after player has finished the round and clicks next round
   function nextRound() {
     pickRandomDigimons(initialCards + round * addedCardsPerRound, allDigimons);
     setSelectedDigimons([]);
+    setRoundOver(false);
     setRound(round + 1);
   }
 
-  // TODO
   // called after player has lost and clicks play again
   function restart() {
     pickRandomDigimons(initialCards, allDigimons);
     setSelectedDigimons([]);
     setRound(1);
-    props.checkBestScore();
+    setLost(false);
+    setRoundOver(false);
+    props.setCurrentScore(0);
   }
 
   // when user clicks on a degimon
   function selectDigimon(digimon) {
     if (selectedDigimons.includes(digimon)) {
       // digimon was selected before and game is lost
-      pickRandomDigimons(initialCards, allDigimons);
-      setSelectedDigimons([]);
-      setRound(1);
-      props.checkBestScore();
+      setRoundOver(true);
+      setLost(true);
     } else {
+      // selection was correct
+      props.addCurrentScore();
       const tempSelectedDigimons = [...selectedDigimons, digimon];
-      // console.log(tempSelectedDigimons, digimons);
+      // it wont update in this render so we should use a temporary variable
+      setSelectedDigimons(tempSelectedDigimons);
       if (tempSelectedDigimons.length >= digimons.length) {
         // round is clear
-        pickRandomDigimons(
-          initialCards + round * addedCardsPerRound,
-          allDigimons
-        );
-        setSelectedDigimons([]);
-        setRound(round + 1);
-        props.addCurrentScore();
+        setRoundOver(true);
       } else {
-        // selection was correct
-        setSelectedDigimons(tempSelectedDigimons);
+        // selection was correct but round isn't over yet
         shuffleDigimons();
-        props.addCurrentScore();
       }
     }
   }
@@ -99,7 +94,19 @@ function Main(props) {
         digimons={digimons}
         selectDigimon={selectDigimon}
         roundOver={roundOver}
+        selectedDigimons={selectedDigimons}
       />
+      {lost && (
+        <div className="restart">
+          your score was {props.currentScore}{" "}
+          <button onClick={restart}>restart</button>
+        </div>
+      )}
+      {roundOver && !lost && (
+        <div className="next-round">
+          round is clear <button onClick={nextRound}>next</button>
+        </div>
+      )}
     </main>
   );
 }

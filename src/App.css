@@ -89,6 +89,14 @@ main .round-scores {
   transform: scale(1.07);
 }
 
+.card.over {
+  cursor: default;
+}
+
+.card.over.selected {
+  background-color: #10b981;
+}
+
 .card img {
   border-radius: 5px;
   width: 100%;
