@@ -33,7 +33,7 @@ header h1 {
 }
 
 .current-score {
-  color: #ea580c;
+  color: #ff9900;
 }
 
 /********************************
@@ -45,7 +45,7 @@ body {
 }
 
 main {
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 100px 20px;
 }
 
 main .info {
@@ -76,13 +76,13 @@ main .round-scores {
 .card {
   background-color: white;
   border-radius: 5px;
-  width: 140px;
+  width: 150px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: 2px solid #0f172a;
   cursor: pointer;
   transition: transform 150ms ease-in-out;
-  box-shadow: 0 0 5px 3px rgb(61, 117, 131);
+  box-shadow: 0 0 6px 3px rgb(61, 117, 131);
 }
 
 .card:hover {
@@ -95,17 +95,57 @@ main .round-scores {
 
 .card.over.selected {
   background-color: #10b981;
+  border-color: #10b981;
+  border-width: 2px;
 }
 
 .card img {
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
   width: 100%;
+  height: 138px;
 }
 
 .digimon-name {
   text-align: center;
-  border-top: 1px dashed black;
+  border-top: 2px solid gray;
   padding: 10px;
+  overflow: scroll;
+}
+
+/********************************
+  game over - round over
+*********************************/
+.restart,
+.next-round {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: fit-content;
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.6rem;
+  background-color: antiquewhite;
+  color: #0f172a;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.restart .over-score {
+  color: #ff9900;
+  border-bottom: 3px solid #ff9900;
+}
+
+.restart button,
+.next-round button {
+  padding: 10px;
+  background-color: #0f172a;
+  border-radius: 5px;
+  color: rgb(233, 155, 11);
+  border: none;
+  cursor: pointer;
 }
 
 @media (min-width: 1750px) {
@@ -123,5 +163,12 @@ main .round-scores {
   }
   .card {
     width: 200px;
+  }
+}
+
+@media (max-width: 670px) {
+  .restart,
+  .next-round {
+    font-size: 1rem;
   }
 }

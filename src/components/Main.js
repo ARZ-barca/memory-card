@@ -98,7 +98,8 @@ function Main(props) {
       />
       {lost && (
         <div className="restart">
-          your score was {props.currentScore}{" "}
+          your score was{" "}
+          <span className="over-score">{props.currentScore}</span>{" "}
           <button onClick={restart}>restart</button>
         </div>
       )}
