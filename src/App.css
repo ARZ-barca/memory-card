@@ -109,7 +109,7 @@ main .round-scores {
   text-align: center;
   border-top: 2px solid gray;
   padding: 10px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 /********************************
