@@ -8,6 +8,7 @@ function Main(props) {
   const [selectedDigimons, setSelectedDigimons] = useState([]);
   const [roundOver, setRoundOver] = useState(undefined);
   const [lost, setLost] = useState(false);
+  const [loading, setLoading] = useState(true);
   const initialCards = 5;
   const addedCardsPerRound = 3;
 
@@ -75,6 +76,7 @@ function Main(props) {
         response.json().then((value) => {
           setAllDigimons(value);
           pickRandomDigimons(initialCards, value);
+          setLoading(false);
         });
       })
       .catch((e) => {
@@ -90,6 +92,9 @@ function Main(props) {
           {selectedDigimons.length} / {digimons.length}
         </div>
       </div>
+      {loading && (
+        <div className="loading">Loading (refresh if takes too long)</div>
+      )}
       <Cards
         digimons={digimons}
         selectDigimon={selectDigimon}
