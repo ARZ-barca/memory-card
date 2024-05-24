@@ -66,6 +66,12 @@ main .round-scores {
   color: #10b981;
 }
 
+.loading {
+  text-align: center;
+  font-size: 2rem;
+  color: #153f44;
+}
+
 .cards-container {
   display: flex;
   gap: 15px;
