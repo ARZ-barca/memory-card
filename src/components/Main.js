@@ -93,7 +93,9 @@ function Main(props) {
         </div>
       </div>
       {loading && (
-        <div className="loading">Loading (refresh if takes too long)</div>
+        <div className="loading">
+          Loading (refresh if it takes more than 30s)
+        </div>
       )}
       <Cards
         digimons={digimons}
