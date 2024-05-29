@@ -29,7 +29,10 @@ function Cards(props) {
             key={uniqid()}
             onClick={onClickEvent}
           >
-            <img src={pokemon.img} alt={pokemon.name}></img>
+            <img
+              src={pokemon.sprites["front default"]}
+              alt={pokemon.name}
+            ></img>
             <div className="pokemon-name">{pokemon.name}</div>
           </div>
         );
