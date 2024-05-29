@@ -71,7 +71,7 @@ function App() {
     <div>
       <header>
         <div className="heading">
-          <h1>Digimon Memory Game</h1>
+          <h1>Pokemon Memory Game</h1>
         </div>
 
         <div className="scores">
