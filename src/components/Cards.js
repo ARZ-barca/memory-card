@@ -4,7 +4,7 @@ import uniqid from "uniqid";
 function Cards(props) {
   return (
     <div className="cards-container">
-      {props.digimons.map((digimon) => {
+      {props.pokemons.map((pokemon) => {
         // to calculate the classname of the card
         let classNameAddOn = [];
 
@@ -12,7 +12,7 @@ function Cards(props) {
           // add "over" to the class list
           classNameAddOn.push("over");
 
-          if (props.selectedDigimons.includes(digimon)) {
+          if (props.selectedPokemons.includes(pokemon)) {
             classNameAddOn.push("selected");
           }
         }
@@ -20,7 +20,7 @@ function Cards(props) {
         // to remove click event listener when round is over or player is lost
         let onClickEvent = () => {};
         if (!props.roundOver) {
-          onClickEvent = () => props.selectDigimon(digimon);
+          onClickEvent = () => props.selectPokemon(pokemon);
         }
 
         return (
@@ -29,8 +29,8 @@ function Cards(props) {
             key={uniqid()}
             onClick={onClickEvent}
           >
-            <img src={digimon.img} alt={digimon.name}></img>
-            <div className="digimon-name">{digimon.name}</div>
+            <img src={pokemon.img} alt={pokemon.name}></img>
+            <div className="pokemon-name">{pokemon.name}</div>
           </div>
         );
       })}
