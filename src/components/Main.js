@@ -18,19 +18,23 @@ function getRandomIds(number) {
 
 function getPokemons(pokemonIds, setPokemons, setLoading) {
   setLoading(true);
-  const pokemons = [];
+  const pokemonFetches = [];
   pokemonIds.forEach((id) => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      .then((data) => data.json())
-      .then((data) => {
-        pokemons.push(data);
-      });
+    pokemonFetches.push(fetch(`https://pokeapi.co/api/v2/pokemon/${id}`));
   });
-  Promise.all(pokemons)
-    .then((pokemons) => {
-      setPokemons(pokemons);
-    })
-    .then(setLoading(false));
+
+  Promise.all(pokemonFetches).then((pokemonFetches) => {
+    const pokemonsData = [];
+
+    pokemonFetches.forEach((data) => {
+      pokemonsData.push(data.json());
+    });
+
+    Promise.all(pokemonsData).then((pokemonsData) => {
+      setPokemons(pokemonsData);
+      setLoading(false);
+    });
+  });
 }
 
 // shuffles current pokemons
@@ -50,7 +54,8 @@ function selectPokemon(
   setRoundOver,
   setLost,
   addCurrentScore,
-  pokemons
+  pokemons,
+  setPokemons
 ) {
   if (selectedPokemons.includes(pokemon)) {
     // pokemon was selected before and game is lost
@@ -67,7 +72,7 @@ function selectPokemon(
       setRoundOver(true);
     } else {
       // selection was correct but round isn't over yet
-      shufflePokemons();
+      shufflePokemons(pokemons, setPokemons);
     }
   }
 }
@@ -81,6 +86,7 @@ function nextRound(
   setRound,
   setRoundOver
 ) {
+  setPokemons([]);
   const pokemonIds = getRandomIds(initialCards + round * addedCardsPerRound);
   getPokemons(pokemonIds, setPokemons, setLoading);
   setSelectedPokemons([]);
@@ -95,10 +101,13 @@ function restart(
   setRound,
   setLost,
   setRoundOver,
-  setCurrentScore
+  setCurrentScore,
+  setSelectedPokemons
 ) {
   const pokemonIds = getRandomIds(initialCards);
+  setPokemons([]);
   getPokemons(pokemonIds, setPokemons, setLoading);
+  setSelectedPokemons([]);
   setRound(1);
   setLost(false);
   setRoundOver(false);
@@ -130,7 +139,7 @@ function Main(props) {
       {loading && <div className="loading">Loading</div>}
       <Cards
         pokemons={pokemons}
-        selectDigimon={(pokemon) => {
+        selectPokemon={(pokemon) => {
           selectPokemon(
             pokemon,
             selectedPokemons,
@@ -138,7 +147,8 @@ function Main(props) {
             setRoundOver,
             setLost,
             props.addCurrentScore,
-            pokemons
+            pokemons,
+            setPokemons
           );
         }}
         roundOver={roundOver}
@@ -148,7 +158,21 @@ function Main(props) {
         <div className="restart">
           your score was{" "}
           <span className="over-score">{props.currentScore}</span>{" "}
-          <button onClick={restart}>restart</button>
+          <button
+            onClick={() => {
+              restart(
+                setPokemons,
+                setLoading,
+                setRound,
+                setLost,
+                setRoundOver,
+                props.setCurrentScore,
+                setSelectedPokemons
+              );
+            }}
+          >
+            restart
+          </button>
         </div>
       )}
       {roundOver && !lost && (
