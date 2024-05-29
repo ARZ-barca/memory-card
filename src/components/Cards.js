@@ -22,17 +22,13 @@ function Cards(props) {
         if (!props.roundOver) {
           onClickEvent = () => props.selectPokemon(pokemon);
         }
-
         return (
           <div
             className={"card " + classNameAddOn.join(" ")}
             key={uniqid()}
             onClick={onClickEvent}
           >
-            <img
-              src={pokemon.sprites["front default"]}
-              alt={pokemon.name}
-            ></img>
+            <img src={pokemon.sprites.front_default} alt={pokemon.name}></img>
             <div className="pokemon-name">{pokemon.name}</div>
           </div>
         );

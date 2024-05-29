@@ -9,9 +9,14 @@ const pokemonCount = 999;
 
 function getRandomIds(number) {
   let pokemonIds = [];
-  for (let i = 0; i < number; i++) {
-    // pokemon ids start at 1 in the api
-    pokemonIds.push(Math.floor(Math.random() * pokemonCount) + 1);
+  const limit = Math.min(number, pokemonCount);
+  for (let i = 0; i < limit; i++) {
+    let id;
+    do {
+      // pokemon ids start at 1 in the api
+      id = Math.floor(Math.random() * pokemonCount) + 1;
+    } while (pokemonIds.includes(id));
+    pokemonIds.push(id);
   }
   return pokemonIds;
 }
